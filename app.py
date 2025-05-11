@@ -6,7 +6,7 @@ import streamlit as st
 from langchain_experimental.agents import create_csv_agent
 from langchain.agents.agent_types import AgentType
 # Import both lLLms
-from langchain_community.llms import OpenAI
+from langchain.chat_models import ChatOpenAI
 from langchain_google_genai import ChatGoogleGenerativeAI
 
 st.set_page_config(page_title="CSV Chatbot", layout="centered")
@@ -30,8 +30,12 @@ if api_key and uploaded_file:
 
     # Step 5: Initialize LLM
     if provider == "DeepSeek":
-        os.environ["DEEPSEEK_API_KEY"] = api_key
-        llm = OpenAI(model="deepseek-chat",temperature=0)
+        llm = ChatOpenAI(
+            openai_api_key=api_key,
+            model="deepseek-chat",
+            temperature=0,
+            openai_api_base="https://api.deepseek.com/v1"  # DeepSeek API endpoint
+        )
     else:
         os.environ["GOOGLE_API_KEY"] = api_key
         llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0)
