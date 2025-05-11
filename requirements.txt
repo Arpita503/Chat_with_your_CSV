@@ -1,0 +1,7 @@
+streamlit 
+langchain 
+openai 
+langchain-google-genai
+langchain-experimental
+langchain-community
+tabulate
